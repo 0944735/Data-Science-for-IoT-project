@@ -67,7 +67,7 @@
             },
             "darkTheme": {
                 "default": "#097479",
-                "baseColor": "#9d0000",
+                "baseColor": "#640000",
                 "baseFont": "Verdana,Verdana,Geneva,sans-serif",
                 "edited": true,
                 "reset": false
@@ -82,11 +82,11 @@
             "themeState": {
                 "base-color": {
                     "default": "#097479",
-                    "value": "#9d0000",
+                    "value": "#640000",
                     "edited": true
                 },
                 "page-titlebar-backgroundColor": {
-                    "value": "#9d0000",
+                    "value": "#640000",
                     "edited": false
                 },
                 "page-backgroundColor": {
@@ -98,7 +98,7 @@
                     "edited": false
                 },
                 "group-textColor": {
-                    "value": "#e90000",
+                    "value": "#b00000",
                     "edited": false
                 },
                 "group-borderColor": {
@@ -114,7 +114,7 @@
                     "edited": false
                 },
                 "widget-backgroundColor": {
-                    "value": "#9d0000",
+                    "value": "#640000",
                     "edited": false
                 },
                 "widget-borderColor": {
