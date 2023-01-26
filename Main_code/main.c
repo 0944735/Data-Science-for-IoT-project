@@ -5,26 +5,43 @@
 #include <wiringPi.h>
 #include "MQTTClient.h"
 
-#define MAGNET_SENSOR 23
+#define MAGNET_SENSOR 25
 #define DOOR_LED 24
 #define BODY_CHECK 22
-#define BUZZER 25
+#define BUZZER 17
+#define CLIENTID "ALARM SYSTEM OMEGA"
+#define ADDRESS  "mqtt://broker.hivemq.com:1883"
 #define ALARM_TOPIC "project/alarm"
 #define DOOR_TOPIC "project/deur"
 #define CHECK_TOPIC "project/check"
+#define DOOR_OPEN "OPEN"
+#define DOOR_CLOSED "CLOSED"
+#define QOS                 2
+#define TIMEOUT             10000L
 
 struct globalVar{
 	bool doorOpen;
 	MQTTClient_deliveryToken token;
 	bool alarmSystem;
+	MQTTClient client;
+	MQTTClient_message pubmsg;
+	char topic[20];
 };
 typedef struct globalVar global_t;
 
-volatile global_t variables; 
+global_t variables; 
+
+extern void MQTTPublish(global_t input);
+extern global_t msgInit(global_t input);
 
 void magnetRead(){
 	if(digitalRead(MAGNET_SENSOR)){
 		variables.doorOpen = true;
+		variables.pubmsg.payload = DOOR_OPEN;
+		variables.pubmsg.payloadlen = strlen(DOOR_OPEN);
+		variables.pubmsg.qos = QOS;
+		variables.pubmsg.retained = 0;
+		MQTTPublish(variables);
 	}
 	else if(!digitalRead(MAGNET_SENSOR)){
 		variables.doorOpen = false;
@@ -49,8 +66,57 @@ void GPIO_setup(global_t input){
 int main(int argc, char* argv[]){
 	wiringPiSetupGpio();
 	GPIO_setup(variables);
+	magnetRead();
+	MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
+//	variables.pubmsg = MQTTClient_message_initializer;
+	variables = msgInit(variables); // <- replacement for line above
 	
-	while(1){
-	}
+	MQTTClient_create(&variables.client, ADDRESS, CLIENTID,
+						MQTTCLIENT_PERSISTENCE_NONE, NULL);
+    conn_opts.keepAliveInterval = 20;
+    conn_opts.cleansession = 1;
+    
+    int ch;
+    
+    do{
+		ch = getchar();
+        if(variables.doorOpen == true){
+			digitalWrite(DOOR_LED, 1);
+		}
+		else if(variables.doorOpen == true){
+			digitalWrite(DOOR_LED, 0);
+		}
+    }while(ch!='Q' && ch != 'q');
+	
+	printf("Shutting down....\n");
+    MQTTClient_disconnect(variables.client, 10000);
+    MQTTClient_destroy(&variables.client);
+	
 	return 0;
+}
+
+void MQTTPublish(global_t input){
+	int ret;
+	MQTTClient_publishMessage(variables.client, variables.topic, &variables.pubmsg, &variables.token);
+    printf("Waiting for up to %d seconds for publication of %s\n"
+            "on topic %s for client with ClientID: %s\n",
+            (int)(TIMEOUT/1000), variables.pubmsg.payload, variables.topic, CLIENTID);
+    ret = MQTTClient_waitForCompletion(variables.client, variables.token, TIMEOUT);
+    printf("Message with delivery token %d delivered\n", variables.token);
+    
+    printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
+           "Press Q<Enter> to quit\n\n", variables.topic, CLIENTID, QOS);
+}
+
+global_t msgInit(global_t input){
+	strcpy(input.pubmsg.struct_id, "MQTM");
+	input.pubmsg.struct_version = 1;
+	input.pubmsg.payloadlen = 0;
+	input.pubmsg.payload = NULL;
+	input.pubmsg.qos = 0;
+	input.pubmsg.retained = 0;
+	input.pubmsg.dup = 0;
+	input.pubmsg.msgid = 0;
+	input.pubmsg.properties = (struct MQTTProperties) {0, 0, 0, NULL};
+	return input;
 }
