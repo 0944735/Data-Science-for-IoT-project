@@ -177,10 +177,11 @@
         "rh": 0,
         "inputs": 0,
         "x": 670,
-        "y": 120,
+        "y": 100,
         "wires": [
             [
-                "a5ee51ece38b2449"
+                "a5ee51ece38b2449",
+                "69bf77cd9634bc10"
             ]
         ]
     },
@@ -197,8 +198,8 @@
         "format": "{{msg.payload}}",
         "layout": "row-center",
         "className": "",
-        "x": 870,
-        "y": 120,
+        "x": 930,
+        "y": 60,
         "wires": []
     },
     {
@@ -215,7 +216,7 @@
         "correl": "",
         "expiry": "",
         "broker": "c66b4559e4f0cae2",
-        "x": 910,
+        "x": 1030,
         "y": 260,
         "wires": []
     },
@@ -243,7 +244,8 @@
         "y": 180,
         "wires": [
             [
-                "669652e6bcc9d309"
+                "669652e6bcc9d309",
+                "515ecfb40130a88b"
             ]
         ]
     },
@@ -271,7 +273,8 @@
         "y": 240,
         "wires": [
             [
-                "669652e6bcc9d309"
+                "669652e6bcc9d309",
+                "515ecfb40130a88b"
             ]
         ]
     },
@@ -319,32 +322,6 @@
         "x": 1270,
         "y": 540,
         "wires": []
-    },
-    {
-        "id": "d8083839c829c447",
-        "type": "inject",
-        "z": "cea09860469968f1",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "ON",
-        "payloadType": "str",
-        "x": 230,
-        "y": 420,
-        "wires": [
-            [
-                "2f49538e761bd82c",
-                "8373d298188a3e2a"
-            ]
-        ]
     },
     {
         "id": "450602cc4e39a7d4",
@@ -491,7 +468,7 @@
                 "t": "change",
                 "p": "payload",
                 "pt": "msg",
-                "from": "ON",
+                "from": "P",
                 "fromt": "str",
                 "to": "PERSON ENTERED/LEFT THE BUILDING....",
                 "tot": "str"
@@ -543,7 +520,7 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 560,
+        "x": 580,
         "y": 560,
         "wires": [
             [
@@ -571,7 +548,7 @@
         "to": "",
         "reg": false,
         "x": 360,
-        "y": 540,
+        "y": 520,
         "wires": [
             [
                 "6cbc41c9204b7347"
@@ -625,5 +602,169 @@
                 "900ce775473f5858"
             ]
         ]
+    },
+    {
+        "id": "b3a6147b602226c2",
+        "type": "e-mail",
+        "z": "cea09860469968f1",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "ralfprive@live.nl",
+        "dname": "",
+        "x": 700,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "69bf77cd9634bc10",
+        "type": "debug",
+        "z": "cea09860469968f1",
+        "name": "debug 149",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d014b64c8b08d355",
+        "type": "mqtt in",
+        "z": "cea09860469968f1",
+        "name": "",
+        "topic": "project/melding",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c66b4559e4f0cae2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 240,
+        "y": 300,
+        "wires": [
+            [
+                "bbc95436aea7e261"
+            ]
+        ]
+    },
+    {
+        "id": "6d0eae8dcc2bfcde",
+        "type": "mqtt in",
+        "z": "cea09860469968f1",
+        "name": "",
+        "topic": "project/persoon",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c66b4559e4f0cae2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 520,
+        "y": 420,
+        "wires": [
+            [
+                "2f49538e761bd82c",
+                "8373d298188a3e2a"
+            ]
+        ]
+    },
+    {
+        "id": "bbc95436aea7e261",
+        "type": "change",
+        "z": "cea09860469968f1",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "M",
+                "fromt": "str",
+                "to": "AN INTRUDER HAS ENTERED YOUR HOUSE",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ALERT ALERT!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 300,
+        "wires": [
+            [
+                "b3a6147b602226c2"
+            ]
+        ]
+    },
+    {
+        "id": "515ecfb40130a88b",
+        "type": "change",
+        "z": "cea09860469968f1",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "A",
+                "fromt": "str",
+                "to": "ON",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "S",
+                "fromt": "str",
+                "to": "OFF",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1000,
+        "y": 200,
+        "wires": [
+            [
+                "50643ab6a2d46994"
+            ]
+        ]
+    },
+    {
+        "id": "50643ab6a2d46994",
+        "type": "ui_text",
+        "z": "cea09860469968f1",
+        "group": "2c23479610a58f1f",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "ALARM: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1180,
+        "y": 180,
+        "wires": []
     }
 ]
