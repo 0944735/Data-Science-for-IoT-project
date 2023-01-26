@@ -37,7 +37,7 @@
     {
         "id": "300e9ad571deb5f7",
         "type": "ui_tab",
-        "name": "Home",
+        "name": "Door Alarm project",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false
@@ -45,11 +45,11 @@
     {
         "id": "2c23479610a58f1f",
         "type": "ui_group",
-        "name": "Keuzevak",
+        "name": "Home",
         "tab": "300e9ad571deb5f7",
         "order": 1,
         "disp": true,
-        "width": "6",
+        "width": 6,
         "collapse": false,
         "className": ""
     },
@@ -153,6 +153,25 @@
         }
     },
     {
+        "id": "463f26aa73519adc",
+        "type": "ui_tab",
+        "name": "Test",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "d90fc71a5184b96f",
+        "type": "ui_group",
+        "name": "Log",
+        "tab": "300e9ad571deb5f7",
+        "order": 2,
+        "disp": true,
+        "width": 10,
+        "collapse": false,
+        "className": ""
+    },
+    {
         "id": "8cac13314485ccf2",
         "type": "mqtt in",
         "z": "cea09860469968f1",
@@ -178,7 +197,7 @@
         "type": "ui_text",
         "z": "cea09860469968f1",
         "group": "2c23479610a58f1f",
-        "order": 0,
+        "order": 1,
         "width": 0,
         "height": 0,
         "name": "",
@@ -214,7 +233,7 @@
         "z": "cea09860469968f1",
         "name": "",
         "group": "2c23479610a58f1f",
-        "order": 1,
+        "order": 2,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -242,7 +261,7 @@
         "z": "cea09860469968f1",
         "name": "",
         "group": "2c23479610a58f1f",
-        "order": 1,
+        "order": 3,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -263,5 +282,314 @@
                 "669652e6bcc9d309"
             ]
         ]
+    },
+    {
+        "id": "a1a3eb436141dce2",
+        "type": "inject",
+        "z": "cea09860469968f1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 580,
+        "y": 500,
+        "wires": [
+            [
+                "9fce905c48cd6a8c"
+            ]
+        ]
+    },
+    {
+        "id": "0cf216f5d771ead5",
+        "type": "debug",
+        "z": "cea09860469968f1",
+        "name": "debug 116",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "d8083839c829c447",
+        "type": "inject",
+        "z": "cea09860469968f1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 550,
+        "y": 400,
+        "wires": [
+            [
+                "2f49538e761bd82c"
+            ]
+        ]
+    },
+    {
+        "id": "450602cc4e39a7d4",
+        "type": "exec",
+        "z": "cea09860469968f1",
+        "command": "tail -n 4 TestFile.txt",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 990,
+        "y": 560,
+        "wires": [
+            [
+                "0cf216f5d771ead5",
+                "68490baea5e072e8"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9558c317682d1269",
+        "type": "file",
+        "z": "cea09860469968f1",
+        "name": "",
+        "filename": "TestFile.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1330,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9fce905c48cd6a8c",
+        "type": "file in",
+        "z": "cea09860469968f1",
+        "name": "",
+        "filename": "TestFile.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 770,
+        "y": 500,
+        "wires": [
+            [
+                "a7a0051b8e4ee87e",
+                "450602cc4e39a7d4"
+            ]
+        ]
+    },
+    {
+        "id": "a7a0051b8e4ee87e",
+        "type": "debug",
+        "z": "cea09860469968f1",
+        "name": "debug 147",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "4f2a8e70eec1819e",
+        "type": "inject",
+        "z": "cea09860469968f1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "OFF",
+        "payloadType": "str",
+        "x": 550,
+        "y": 440,
+        "wires": [
+            [
+                "2f49538e761bd82c"
+            ]
+        ]
+    },
+    {
+        "id": "68490baea5e072e8",
+        "type": "ui_template",
+        "z": "cea09860469968f1",
+        "group": "d90fc71a5184b96f",
+        "name": "",
+        "order": 1,
+        "width": 10,
+        "height": 7,
+        "format": "<div style=\"white-space: pre-wrap;\" ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1260,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "658745ed3af9f9c0",
+        "type": "inject",
+        "z": "cea09860469968f1",
+        "name": "CLEAR",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 1030,
+        "y": 360,
+        "wires": [
+            [
+                "900ce775473f5858"
+            ]
+        ]
+    },
+    {
+        "id": "900ce775473f5858",
+        "type": "file",
+        "z": "cea09860469968f1",
+        "name": "",
+        "filename": "TestFile.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1330,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9eda2b955b1262a0",
+        "type": "function",
+        "z": "cea09860469968f1",
+        "name": "function 1",
+        "func": "var time = (new Date().toISOString());\n\nmsg.payload = time + \" \" + msg.payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 440,
+        "wires": [
+            [
+                "f5b822a3ac3128b0",
+                "9558c317682d1269"
+            ]
+        ]
+    },
+    {
+        "id": "2f49538e761bd82c",
+        "type": "change",
+        "z": "cea09860469968f1",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "ON",
+                "fromt": "str",
+                "to": "TEST ON",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "OFF",
+                "fromt": "str",
+                "to": "TEST OFF",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 420,
+        "wires": [
+            [
+                "9eda2b955b1262a0"
+            ]
+        ]
+    },
+    {
+        "id": "f5b822a3ac3128b0",
+        "type": "debug",
+        "z": "cea09860469968f1",
+        "name": "debug 148",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1310,
+        "y": 280,
+        "wires": []
     }
 ]
