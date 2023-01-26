@@ -8,6 +8,10 @@
 #define MAGNET_SENSOR 23
 #define DOOR_LED 24
 #define BODY_CHECK 22
+#define BUZZER 25
+#define ALARM_TOPIC "project/alarm"
+#define DOOR_TOPIC "project/deur"
+#define CHECK_TOPIC "project/check"
 
 struct globalVar{
 	bool doorOpen;
@@ -45,5 +49,8 @@ void GPIO_setup(global_t input){
 int main(int argc, char* argv[]){
 	wiringPiSetupGpio();
 	GPIO_setup(variables);
+	
+	while(1){
+	}
 	return 0;
 }

@@ -3,9 +3,11 @@
 #include <string.h>
 #include <stdbool.h>
 #include <wiringPi.h>
+#include <softPwm.h>
 
-#define MAGNET_SENSOR 23
+#define MAGNET_SENSOR 25
 #define DOOR_LED 24
+#define BUZZER 17
 
 volatile bool doorOpen;
 
@@ -29,14 +31,19 @@ int main(int argc, char* argv[]){
 	pinMode(DOOR_LED, OUTPUT);
 	digitalWrite(DOOR_LED, 0);
 	
+	pwmSetClock(0.005);
+	softPwmCreate(BUZZER, 0, 100);
+
 	magnetRead();
 	
 	while(1){
 		if (doorOpen == true){
 			digitalWrite(DOOR_LED, 1);
+			softPwmCreate(BUZZER, 80, 100);
 		}
 		else if (doorOpen == false){
 			digitalWrite(DOOR_LED, 0);
+			softPwmCreate(BUZZER, 0, 100);
 		}
 	}
 	
