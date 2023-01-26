@@ -20,6 +20,8 @@ Voordat de C-code wordt gebruikt moeten er twee libraries gecloned worden:
 
 Installation guides zijn beschikbaar op de repositories.
 
+Nadat alles is geinstalleerd kan de build.sh gerunt worden. Daarna kan de main.o bestand gerunt en dan runt het systeem. In de CLI kan bijgehouden wat er gebeurt.
+
 ## Node Red
 
 Om de flows te kunnen gebruiken moet er eerst [Node Red](https://nodered.org/docs/getting-started/raspberrypi) geinstalleerd worden op de pi. Naast dit moeten er twee Node Red palletes geinstalleerd worden:
