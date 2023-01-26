@@ -49,7 +49,7 @@
         "tab": "300e9ad571deb5f7",
         "order": 1,
         "disp": true,
-        "width": "10",
+        "width": 6,
         "collapse": false,
         "className": ""
     },
@@ -167,7 +167,7 @@
         "tab": "300e9ad571deb5f7",
         "order": 2,
         "disp": true,
-        "width": "6",
+        "width": 10,
         "collapse": false,
         "className": ""
     },
@@ -345,11 +345,12 @@
         "topic": "",
         "payload": "ON",
         "payloadType": "str",
-        "x": 550,
-        "y": 400,
+        "x": 270,
+        "y": 380,
         "wires": [
             [
-                "2f49538e761bd82c"
+                "2f49538e761bd82c",
+                "8373d298188a3e2a"
             ]
         ]
     },
@@ -447,11 +448,12 @@
         "topic": "",
         "payload": "OFF",
         "payloadType": "str",
-        "x": 550,
+        "x": 290,
         "y": 440,
         "wires": [
             [
-                "2f49538e761bd82c"
+                "2f49538e761bd82c",
+                "8373d298188a3e2a"
             ]
         ]
     },
@@ -461,7 +463,7 @@
         "z": "cea09860469968f1",
         "group": "d90fc71a5184b96f",
         "name": "",
-        "order": 4,
+        "order": 1,
         "width": 10,
         "height": 7,
         "format": "<div style=\"white-space: pre-wrap;\" ng-bind-html=\"msg.payload\"></div>",
@@ -474,31 +476,6 @@
         "y": 500,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "658745ed3af9f9c0",
-        "type": "inject",
-        "z": "cea09860469968f1",
-        "name": "CLEAR",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "str",
-        "x": 1030,
-        "y": 360,
-        "wires": [
-            [
-                "900ce775473f5858"
-            ]
         ]
     },
     {
@@ -523,7 +500,7 @@
         "type": "function",
         "z": "cea09860469968f1",
         "name": "function 1",
-        "func": "var time = (new Date().toISOString());\n\nmsg.payload = time + \" \" + msg.payload;\n\nreturn msg;",
+        "func": "var time = (new Date().toISOString());\n\n\n\nmsg.payload = time + \"    \" + msg.payload;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -591,5 +568,86 @@
         "x": 1310,
         "y": 280,
         "wires": []
+    },
+    {
+        "id": "6cbc41c9204b7347",
+        "type": "trigger",
+        "z": "cea09860469968f1",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "date",
+        "op2type": "date",
+        "duration": "250",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 560,
+        "y": 560,
+        "wires": [
+            [
+                "9fce905c48cd6a8c"
+            ]
+        ]
+    },
+    {
+        "id": "8373d298188a3e2a",
+        "type": "change",
+        "z": "cea09860469968f1",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 540,
+        "wires": [
+            [
+                "6cbc41c9204b7347"
+            ]
+        ]
+    },
+    {
+        "id": "6eaa380dfec9bdf3",
+        "type": "ui_button",
+        "z": "cea09860469968f1",
+        "name": "",
+        "group": "d90fc71a5184b96f",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Clear log",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 920,
+        "y": 320,
+        "wires": [
+            [
+                "900ce775473f5858",
+                "6cbc41c9204b7347"
+            ]
+        ]
     }
 ]
