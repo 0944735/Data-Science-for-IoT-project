@@ -165,7 +165,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 640,
+        "x": 660,
         "y": 120,
         "wires": [
             [
@@ -186,8 +186,8 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "className": "",
-        "x": 850,
-        "y": 140,
+        "x": 870,
+        "y": 120,
         "wires": []
     },
     {
@@ -195,8 +195,8 @@
         "type": "mqtt out",
         "z": "cea09860469968f1",
         "name": "",
-        "topic": "ur/mom",
-        "qos": "",
+        "topic": "project/alarm",
+        "qos": "2",
         "retain": "",
         "respTopic": "",
         "contentType": "",
@@ -204,8 +204,8 @@
         "correl": "",
         "expiry": "",
         "broker": "c66b4559e4f0cae2",
-        "x": 860,
-        "y": 240,
+        "x": 910,
+        "y": 260,
         "wires": []
     },
     {
@@ -218,18 +218,46 @@
         "width": 0,
         "height": 0,
         "passthru": false,
-        "label": "butoon",
+        "label": "Turn on Alarm",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
         "className": "",
         "icon": "",
-        "payload": "deez nutz",
+        "payload": "A",
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 640,
+        "x": 660,
         "y": 180,
+        "wires": [
+            [
+                "669652e6bcc9d309"
+            ]
+        ]
+    },
+    {
+        "id": "c9401a411c7f8b16",
+        "type": "ui_button",
+        "z": "cea09860469968f1",
+        "name": "",
+        "group": "2c23479610a58f1f",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Turn off Alarm",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "S",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 660,
+        "y": 240,
         "wires": [
             [
                 "669652e6bcc9d309"
