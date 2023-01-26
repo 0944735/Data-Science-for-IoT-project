@@ -13,6 +13,8 @@
 #define ADDRESS  "mqtt://broker.hivemq.com:1883"
 #define ALARM_TOPIC "project/alarm"
 #define DOOR_TOPIC "project/deur"
+#define NOT_TOPIC "project/melding"
+#define PERSON_TOPIC "project/persoon"
 #define CHECK_TOPIC "project/check"
 #define DOOR_OPEN "OPEN"
 #define DOOR_CLOSED "CLOSED"
@@ -23,6 +25,7 @@ struct globalVar{
 	bool doorOpen;
 	MQTTClient_deliveryToken token;
 	bool alarmSystem;
+	bool intruderEntered;
 	MQTTClient client;
 	MQTTClient_message pubmsg;
 	char topic[20];
@@ -34,6 +37,19 @@ global_t variables;
 extern void MQTTPublish(global_t input);
 extern global_t msgInit(global_t input);
 extern void GPIO_setup();
+extern int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message);
+
+void delivered(void *context, MQTTClient_deliveryToken dt)
+{
+    printf("Message with token value %d delivery confirmed\n", dt);
+    variables.token = dt;
+}
+
+void connlost(void *context, char *cause)
+{
+    printf("\nConnection lost\n");
+    printf("     cause: %s\n", cause);
+}
 
 void magnetRead(){
 	if(digitalRead(MAGNET_SENSOR)){
@@ -71,6 +87,8 @@ int main(int argc, char* argv[]){
     conn_opts.keepAliveInterval = 20;
     conn_opts.cleansession = 1;
     
+    MQTTClient_setCallbacks(variables.client, NULL, connlost, msgarrvd, delivered);
+    
     if ((rc = MQTTClient_connect(variables.client, &conn_opts)) != MQTTCLIENT_SUCCESS)
     {
         printf("Failed to connect, return code %d\n", rc);
@@ -79,7 +97,7 @@ int main(int argc, char* argv[]){
     
     printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
            "Press Q<Enter> to quit\n\n", variables.topic, CLIENTID, QOS);
-           
+    MQTTClient_subscribe(variables.client, ALARM_TOPIC, QOS);       
     magnetRead();
     
     int ch;
@@ -132,4 +150,36 @@ void GPIO_setup(global_t input){
 	
 	pinMode(DOOR_LED, OUTPUT);
 	digitalWrite(DOOR_LED, 0);
+}
+
+int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message)
+{
+    int i;
+    char* payloadptr;
+    printf("Message arrived\n");
+    printf("     topic: %s\n", topicName);
+    printf("   message: ");
+    payloadptr = message->payload;
+    if (payloadptr[0] == 'A'){
+        variables.alarmSystem = true;
+    }
+    if (payloadptr[0] == 'S'){
+        variables.alarmSystem = false;
+    }
+    for(i=0; i<message->payloadlen; i++)
+    {
+        putchar(*payloadptr++);
+    }
+
+    putchar('\n');
+    if (variables.alarmSystem == true){
+        printf("ALARM ON\n");
+    }
+    else{
+        printf("ALARM OFF\n");
+    }
+    MQTTClient_freeMessage(&message);
+    MQTTClient_free(topicName);
+
+    return 1;
 }
