@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 #include <wiringPi.h>
 #include "MQTTClient.h"
 
@@ -18,8 +19,12 @@
 #define CHECK_TOPIC "project/check"
 #define DOOR_OPEN "OPEN"
 #define DOOR_CLOSED "CLOSED"
+#define INTRUDER_ALERT "M"
+#define PERSON_DETECTED "P"
 #define QOS                 2
 #define TIMEOUT             10000L
+
+//todo: buzzer code -> waiting for logic converter to arrive
 
 struct globalVar{
 	bool doorOpen;
@@ -30,14 +35,14 @@ struct globalVar{
 	MQTTClient_message pubmsg;
 	char topic[20];
 };
-typedef struct globalVar global_t;
+typedef struct globalVar global_t; //global variable struct for easy access
 
 global_t variables; 
 
-extern void MQTTPublish(global_t input);
-extern global_t msgInit(global_t input);
-extern void GPIO_setup();
-extern int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message);
+extern void MQTTPublish(global_t input); //MQTT publish to a topic
+extern global_t msgInit(global_t input); //initialization for MQTT message because of the usage of the global variable structure
+extern void GPIO_setup(); //General gpio setup.
+extern int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message); //Callback function for receiving payloads.
 
 void delivered(void *context, MQTTClient_deliveryToken dt)
 {
@@ -52,7 +57,7 @@ void connlost(void *context, char *cause)
 }
 
 void magnetRead(){
-	if(digitalRead(MAGNET_SENSOR)){
+	if(digitalRead(MAGNET_SENSOR)){ //Message are sent depending on the interrupt edge
 		variables.doorOpen = true;
 		digitalWrite(DOOR_LED, 1);
 		variables.pubmsg.payload = DOOR_OPEN;
@@ -74,8 +79,30 @@ void magnetRead(){
 	}
 }
 
+void intruderCheck(){
+	delay(2);
+	if (variables.doorOpen == true){ //checks if door is open
+		variables.pubmsg.payload = PERSON_DETECTED;
+		variables.pubmsg.payloadlen = strlen(PERSON_DETECTED);
+		variables.pubmsg.qos = QOS;
+		variables.pubmsg.retained = 0;
+		strcpy(variables.topic, PERSON_TOPIC);
+		MQTTPublish(variables); //check if alarm is turned on
+		if ((variables.alarmSystem == true) && (variables.intruderEntered == false)){ //Check if alarm system is turned on, intruderEntered is for email spam protection
+			variables.intruderEntered = true;
+			variables.pubmsg.payload = INTRUDER_ALERT;
+			variables.pubmsg.payloadlen = strlen(INTRUDER_ALERT);
+			variables.pubmsg.qos = QOS;
+			variables.pubmsg.retained = 0;
+			strcpy(variables.topic, NOT_TOPIC);
+			MQTTPublish(variables);
+		}
+	}
+	
+}
+
 int main(int argc, char* argv[]){
-	wiringPiSetupGpio();
+	wiringPiSetupGpio(); //<- needed for C gpio programming
 	GPIO_setup(variables);
 	int rc;
 	MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
@@ -83,7 +110,7 @@ int main(int argc, char* argv[]){
 	variables = msgInit(variables); // <- replacement for line above
 	
 	MQTTClient_create(&variables.client, ADDRESS, CLIENTID,
-						MQTTCLIENT_PERSISTENCE_NONE, NULL);
+						MQTTCLIENT_PERSISTENCE_NONE, NULL); //create MQTT client
     conn_opts.keepAliveInterval = 20;
     conn_opts.cleansession = 1;
     
@@ -93,12 +120,12 @@ int main(int argc, char* argv[]){
     {
         printf("Failed to connect, return code %d\n", rc);
         exit(EXIT_FAILURE);
-    }
+    } //connect to the broker
     
     printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
            "Press Q<Enter> to quit\n\n", variables.topic, CLIENTID, QOS);
     MQTTClient_subscribe(variables.client, ALARM_TOPIC, QOS);       
-    magnetRead();
+    magnetRead(); //initial read of the door sensors
     
     int ch;
     
@@ -107,13 +134,13 @@ int main(int argc, char* argv[]){
     }while(ch!='Q' && ch != 'q');
 	
 	printf("Shutting down....\n");
-    MQTTClient_disconnect(variables.client, 10000);
+    MQTTClient_disconnect(variables.client, 10000); //MQTT disconnect when the user wants to
     MQTTClient_destroy(&variables.client);
 	
 	return 0;
 }
 
-void MQTTPublish(global_t input){
+void MQTTPublish(global_t input){ //publish function to the topic specified 
 	int ret;
 	MQTTClient_publishMessage(variables.client, variables.topic, &variables.pubmsg, &variables.token);
     printf("Waiting for up to %d seconds for publication of %s\n"
@@ -124,7 +151,7 @@ void MQTTPublish(global_t input){
    
 }
 
-global_t msgInit(global_t input){
+global_t msgInit(global_t input){ //these are the settings for the initializer
 	strcpy(input.pubmsg.struct_id, "MQTM");
 	input.pubmsg.struct_version = 1;
 	input.pubmsg.payloadlen = 0;
@@ -140,19 +167,20 @@ global_t msgInit(global_t input){
 void GPIO_setup(global_t input){
 	pinMode(MAGNET_SENSOR, INPUT);
 	digitalWrite(MAGNET_SENSOR, 1);
-	pullUpDnControl(MAGNET_SENSOR, PUD_UP);
+	pullUpDnControl(MAGNET_SENSOR, PUD_UP); //Pull-up resistors since the sensor is active low
 	
 	pinMode(BODY_CHECK, INPUT);
 	digitalWrite(BODY_CHECK, 1);
-	pullUpDnControl(BODY_CHECK, PUD_UP);
+	pullUpDnControl(BODY_CHECK, PUD_UP); //same as above
 	
 	wiringPiISR(MAGNET_SENSOR, INT_EDGE_BOTH, magnetRead);
+	wiringPiISR(BODY_CHECK, INT_EDGE_FALLING, intruderCheck); 
 	
-	pinMode(DOOR_LED, OUTPUT);
+	pinMode(DOOR_LED, OUTPUT); //LED to indicate if the door is open for testing
 	digitalWrite(DOOR_LED, 0);
 }
 
-int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message)
+int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message) // this code is based off the paho mqtt subscribe example: https://www.eclipse.org/paho/files/mqttdoc/MQTTClient/html/subasync.html
 {
     int i;
     char* payloadptr;
@@ -165,6 +193,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     }
     if (payloadptr[0] == 'S'){
         variables.alarmSystem = false;
+        variables.intruderEntered = false; //essentially resetting functionality when the alarm is turned off
     }
     for(i=0; i<message->payloadlen; i++)
     {
@@ -179,7 +208,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
         printf("ALARM OFF\n");
     }
     MQTTClient_freeMessage(&message);
-    MQTTClient_free(topicName);
+    MQTTClient_free(topicName); //clear memory
 
     return 1;
 }
