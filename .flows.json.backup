@@ -168,7 +168,7 @@
         "type": "mqtt in",
         "z": "cea09860469968f1",
         "name": "",
-        "topic": "deez/nutz",
+        "topic": "project/deur",
         "qos": "2",
         "datatype": "auto-detect",
         "broker": "c66b4559e4f0cae2",
@@ -176,7 +176,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 660,
+        "x": 670,
         "y": 120,
         "wires": [
             [
@@ -337,8 +337,8 @@
         "topic": "",
         "payload": "ON",
         "payloadType": "str",
-        "x": 270,
-        "y": 380,
+        "x": 230,
+        "y": 420,
         "wires": [
             [
                 "2f49538e761bd82c",
@@ -350,7 +350,7 @@
         "id": "450602cc4e39a7d4",
         "type": "exec",
         "z": "cea09860469968f1",
-        "command": "tail -n 20 TestFile.txt",
+        "command": "tail -f TestFile.txt",
         "addpay": "",
         "append": "",
         "useSpawn": "true",
@@ -358,7 +358,7 @@
         "winHide": false,
         "oldrc": false,
         "name": "",
-        "x": 1000,
+        "x": 980,
         "y": 560,
         "wires": [
             [
@@ -535,7 +535,7 @@
         "op2": "",
         "op1type": "date",
         "op2type": "date",
-        "duration": "250",
+        "duration": "500",
         "extend": false,
         "overrideDelay": false,
         "units": "ms",
