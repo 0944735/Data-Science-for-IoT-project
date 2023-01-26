@@ -1,16 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <wiringPi.h>
 #include "MQTTClient.h"
-#define ADDRESS     "mqtt://broker.hivemq.com:1883"
-#define CLIENTID    "ExampleClientPub"
-#define TOPIC       "deez/nutz"
-#define PAYLOAD     "holy mackeroll"
-#define QOS         2
-#define TIMEOUT     10000L
+#define ADDRESS             "mqtt://broker.hivemq.com:1883"
+#define CLIENTID            "ExampleClientPub"
+#define PUBLISH_TOPIC       "deez/nutz"
+#define PAYLOAD             "holy mackeroll"
+#define QOS                 2
+#define TIMEOUT             10000L
+#define SUBSCRIBE_TOPIC     "project/alarm"
 
 volatile MQTTClient_deliveryToken deliveredtoken;
+volatile bool alarmSystem = false;
 
 void delivered(void *context, MQTTClient_deliveryToken dt)
 {
@@ -26,13 +29,27 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     printf("     topic: %s\n", topicName);
     printf("   message: ");
     payloadptr = message->payload;
+    if (payloadptr[0] == 'A'){
+        alarmSystem = true;
+    }
+    if (payloadptr[0] == 'S'){
+        alarmSystem = false;
+    }
     for(i=0; i<message->payloadlen; i++)
     {
         putchar(*payloadptr++);
     }
+
     putchar('\n');
+    if (alarmSystem == true){
+        printf("ALARM ON\n");
+    }
+    else{
+        printf("ALARM OFF\n");
+    }
     MQTTClient_freeMessage(&message);
     MQTTClient_free(topicName);
+
     return 1;
 }
 
@@ -41,11 +58,6 @@ void connlost(void *context, char *cause)
     printf("\nConnection lost\n");
     printf("     cause: %s\n", cause);
 }
-
-
-
-
-
 
 int main(int argc, char* argv[])
 {
@@ -72,18 +84,19 @@ int main(int argc, char* argv[])
     pubmsg.payloadlen = strlen(PAYLOAD);
     pubmsg.qos = QOS;
     pubmsg.retained = 0;
-    MQTTClient_publishMessage(client, TOPIC, &pubmsg, &token);
+    MQTTClient_publishMessage(client, PUBLISH_TOPIC, &pubmsg, &token);
     printf("Waiting for up to %d seconds for publication of %s\n"
             "on topic %s for client with ClientID: %s\n",
-            (int)(TIMEOUT/1000), PAYLOAD, TOPIC, CLIENTID);
+            (int)(TIMEOUT/1000), PAYLOAD, PUBLISH_TOPIC, CLIENTID);
     rc = MQTTClient_waitForCompletion(client, token, TIMEOUT);
     printf("Message with delivery token %d delivered\n", token);
     
     printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
-           "Press Q<Enter> to quit\n\n", TOPIC, CLIENTID, QOS);
-    MQTTClient_subscribe(client, "ur/mom", QOS);
+           "Press Q<Enter> to quit\n\n", PUBLISH_TOPIC, CLIENTID, QOS);
+    MQTTClient_subscribe(client, SUBSCRIBE_TOPIC, QOS);
     do
     {
+        
         ch = getchar();
     } while(ch!='Q' && ch != 'q');
     
