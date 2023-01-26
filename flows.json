@@ -168,7 +168,7 @@
         "type": "mqtt in",
         "z": "cea09860469968f1",
         "name": "",
-        "topic": "deez/nutz",
+        "topic": "project/deur",
         "qos": "2",
         "datatype": "auto-detect",
         "broker": "c66b4559e4f0cae2",
@@ -176,8 +176,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 660,
-        "y": 120,
+        "x": 670,
+        "y": 100,
         "wires": [
             [
                 "a5ee51ece38b2449"
@@ -197,8 +197,8 @@
         "format": "{{msg.payload}}",
         "layout": "row-center",
         "className": "",
-        "x": 870,
-        "y": 120,
+        "x": 930,
+        "y": 60,
         "wires": []
     },
     {
@@ -215,7 +215,7 @@
         "correl": "",
         "expiry": "",
         "broker": "c66b4559e4f0cae2",
-        "x": 910,
+        "x": 930,
         "y": 260,
         "wires": []
     },
@@ -337,8 +337,8 @@
         "topic": "",
         "payload": "ON",
         "payloadType": "str",
-        "x": 270,
-        "y": 380,
+        "x": 210,
+        "y": 420,
         "wires": [
             [
                 "2f49538e761bd82c",
@@ -535,7 +535,7 @@
         "op2": "",
         "op1type": "date",
         "op2type": "date",
-        "duration": "250",
+        "duration": "500",
         "extend": false,
         "overrideDelay": false,
         "units": "ms",
@@ -543,7 +543,7 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 560,
+        "x": 580,
         "y": 560,
         "wires": [
             [
@@ -571,7 +571,7 @@
         "to": "",
         "reg": false,
         "x": 360,
-        "y": 540,
+        "y": 520,
         "wires": [
             [
                 "6cbc41c9204b7347"
@@ -623,6 +623,49 @@
         "wires": [
             [
                 "900ce775473f5858"
+            ]
+        ]
+    },
+    {
+        "id": "b3a6147b602226c2",
+        "type": "e-mail",
+        "z": "cea09860469968f1",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "ralfprive@live.nl",
+        "dname": "",
+        "x": 660,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "0dc662cf5ba4187a",
+        "type": "inject",
+        "z": "cea09860469968f1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "deez nutz",
+        "payload": "gottem",
+        "payloadType": "str",
+        "x": 440,
+        "y": 320,
+        "wires": [
+            [
+                "b3a6147b602226c2"
             ]
         ]
     }
