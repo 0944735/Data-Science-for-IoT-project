@@ -327,7 +327,7 @@
         "id": "450602cc4e39a7d4",
         "type": "exec",
         "z": "cea09860469968f1",
-        "command": "tail -f TestFile.txt",
+        "command": "tail -f Log.txt",
         "addpay": "",
         "append": "",
         "useSpawn": "true",
@@ -335,7 +335,7 @@
         "winHide": false,
         "oldrc": false,
         "name": "",
-        "x": 980,
+        "x": 970,
         "y": 560,
         "wires": [
             [
@@ -351,13 +351,13 @@
         "type": "file",
         "z": "cea09860469968f1",
         "name": "",
-        "filename": "TestFile.txt",
+        "filename": "Log.txt",
         "filenameType": "str",
         "appendNewline": true,
         "createDir": false,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 1330,
+        "x": 1310,
         "y": 440,
         "wires": [
             []
@@ -368,14 +368,14 @@
         "type": "file in",
         "z": "cea09860469968f1",
         "name": "",
-        "filename": "TestFile.txt",
+        "filename": "Log.txt",
         "filenameType": "str",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 770,
+        "x": 750,
         "y": 500,
         "wires": [
             [
@@ -426,13 +426,13 @@
         "type": "file",
         "z": "cea09860469968f1",
         "name": "",
-        "filename": "TestFile.txt",
+        "filename": "Log.txt",
         "filenameType": "str",
         "appendNewline": true,
         "createDir": false,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 1330,
+        "x": 1310,
         "y": 380,
         "wires": [
             []
@@ -783,14 +783,14 @@
         "type": "file in",
         "z": "cea09860469968f1",
         "name": "",
-        "filename": "TestFile.txt",
+        "filename": "Log.txt",
         "filenameType": "str",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 790,
+        "x": 770,
         "y": 680,
         "wires": [
             [
