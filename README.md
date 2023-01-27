@@ -36,6 +36,7 @@ main.o
 Om de flows te kunnen gebruiken moet er eerst [Node Red](https://nodered.org/docs/getting-started/raspberrypi) geinstalleerd worden op de pi. Naast dit moeten er twee Node Red palletes geinstalleerd worden:
 - [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
 - [node-red-node-email](https://flows.nodered.org/node/node-red-node-email)
+- [@prescient-devices/node-red-contrib-downloadfile](https://flows.nodered.org/node/@prescient-devices/node-red-contrib-downloadfile?utm_source=YouTube&utm_medium=tutorial&utm_campaign=prescient-tutorials&utm_id=prescient)
 
 Wanneer alles is geinstalleerd kan deze respository gecloned worden.
 
