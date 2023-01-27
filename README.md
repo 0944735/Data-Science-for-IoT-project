@@ -4,6 +4,10 @@ Het project voor het keuzevak Data Science for IoT.
 
 Het project is een alarm systeem voor de voordeur. Het maakt gebruik van een magneetlezer en een IR sensor om bij te houden wanneer de deur open is en op welk tijdstip iemand naar binnen is gegaan. Er is ook een interface zodat de gebruiker kan aangeven niet thuis te zijn / gaat slapen waardoor er een alarm wordt aangezet. Wanneer het alarm afgaat, gaat er bij de pi een buzzer af en krijgt de gebruiker een email binnen dat iemand is binnengebroken.
 
+De IoT-pipeline van het project ziet er zo uit:
+
+![bbbb](https://i.imgur.com/kC5iHOo.png)
+
 Het project bestaat uit twee sofware onderdelen:
 - Pi C-code
 - Node Red dashboard
