@@ -327,7 +327,7 @@
         "id": "450602cc4e39a7d4",
         "type": "exec",
         "z": "cea09860469968f1",
-        "command": "tail -f TestFile.txt",
+        "command": "tail -f Log.txt",
         "addpay": "",
         "append": "",
         "useSpawn": "true",
@@ -335,7 +335,7 @@
         "winHide": false,
         "oldrc": false,
         "name": "",
-        "x": 980,
+        "x": 970,
         "y": 560,
         "wires": [
             [
@@ -351,13 +351,13 @@
         "type": "file",
         "z": "cea09860469968f1",
         "name": "",
-        "filename": "TestFile.txt",
+        "filename": "Log.txt",
         "filenameType": "str",
         "appendNewline": true,
         "createDir": false,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 1330,
+        "x": 1310,
         "y": 440,
         "wires": [
             []
@@ -368,14 +368,14 @@
         "type": "file in",
         "z": "cea09860469968f1",
         "name": "",
-        "filename": "TestFile.txt",
+        "filename": "Log.txt",
         "filenameType": "str",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 770,
+        "x": 750,
         "y": 500,
         "wires": [
             [
@@ -426,13 +426,13 @@
         "type": "file",
         "z": "cea09860469968f1",
         "name": "",
-        "filename": "TestFile.txt",
+        "filename": "Log.txt",
         "filenameType": "str",
         "appendNewline": true,
         "createDir": false,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 1330,
+        "x": 1310,
         "y": 380,
         "wires": [
             []
@@ -766,5 +766,94 @@
         "x": 1180,
         "y": 180,
         "wires": []
+    },
+    {
+        "id": "3551c8d1d1efc9f7",
+        "type": "downloadfile",
+        "z": "cea09860469968f1",
+        "name": "download",
+        "filename": "AlarmSystemLog",
+        "encoding": "none",
+        "x": 980,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "3fb85030af1ac48b",
+        "type": "file in",
+        "z": "cea09860469968f1",
+        "name": "",
+        "filename": "Log.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 770,
+        "y": 680,
+        "wires": [
+            [
+                "3551c8d1d1efc9f7"
+            ]
+        ]
+    },
+    {
+        "id": "5a722e559d26197e",
+        "type": "ui_button",
+        "z": "cea09860469968f1",
+        "name": "",
+        "group": "d90fc71a5184b96f",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Download Log",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "date",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 560,
+        "y": 680,
+        "wires": [
+            [
+                "3fb85030af1ac48b"
+            ]
+        ]
+    },
+    {
+        "id": "7234ac8c9907c637",
+        "type": "inject",
+        "z": "cea09860469968f1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "P",
+        "payloadType": "str",
+        "x": 410,
+        "y": 360,
+        "wires": [
+            [
+                "2f49538e761bd82c",
+                "8373d298188a3e2a"
+            ]
+        ]
     }
 ]

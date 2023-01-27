@@ -512,15 +512,15 @@
         "op2": "",
         "op1type": "date",
         "op2type": "date",
-        "duration": "500",
+        "duration": "1",
         "extend": false,
         "overrideDelay": false,
-        "units": "ms",
+        "units": "s",
         "reset": "",
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 580,
+        "x": 560,
         "y": 560,
         "wires": [
             [
@@ -766,5 +766,94 @@
         "x": 1180,
         "y": 180,
         "wires": []
+    },
+    {
+        "id": "3551c8d1d1efc9f7",
+        "type": "downloadfile",
+        "z": "cea09860469968f1",
+        "name": "download",
+        "filename": "AlarmSystemLog",
+        "encoding": "none",
+        "x": 980,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "3fb85030af1ac48b",
+        "type": "file in",
+        "z": "cea09860469968f1",
+        "name": "",
+        "filename": "TestFile.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 790,
+        "y": 680,
+        "wires": [
+            [
+                "3551c8d1d1efc9f7"
+            ]
+        ]
+    },
+    {
+        "id": "5a722e559d26197e",
+        "type": "ui_button",
+        "z": "cea09860469968f1",
+        "name": "",
+        "group": "d90fc71a5184b96f",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Download Log",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "date",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 560,
+        "y": 680,
+        "wires": [
+            [
+                "3fb85030af1ac48b"
+            ]
+        ]
+    },
+    {
+        "id": "7234ac8c9907c637",
+        "type": "inject",
+        "z": "cea09860469968f1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "P",
+        "payloadType": "str",
+        "x": 410,
+        "y": 360,
+        "wires": [
+            [
+                "2f49538e761bd82c",
+                "8373d298188a3e2a"
+            ]
+        ]
     }
 ]
