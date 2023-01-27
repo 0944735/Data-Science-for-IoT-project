@@ -20,7 +20,16 @@ Voordat de C-code wordt gebruikt moeten er twee libraries gecloned worden:
 
 Installation guides zijn beschikbaar op de repositories.
 
-Nadat alles is geinstalleerd kan de build.sh gerunt worden. Daarna kan de main.o bestand gerunt en dan runt het systeem. In de CLI kan bijgehouden wat er gebeurt.
+Nadat alles is geinstalleerd kan de build.sh via bash gerunt worden. Er kan ook op de executable geklikt worden.
+
+```bash
+./build.sh
+```
+Daarna kan de main.o bestand gerunt en dan runt het systeem. In de CLI kan bijgehouden wat er gebeurt.
+
+```bash
+main.o
+```
 
 ## Node Red
 
@@ -31,3 +40,6 @@ Om de flows te kunnen gebruiken moet er eerst [Node Red](https://nodered.org/doc
 Wanneer alles is geinstalleerd kan deze respository gecloned worden.
 
 Alle JSON bestanden in deze repository kunnen gedownload worden en daarna geimporteerd worden naar Node Red.
+
+**LET OP:**
+De TestFile.txt is cruciaal voor de werking van de log. Zonder dit tekst bestand kan er niet in de log geschreven of gelezen worden. Dus dit bestand in deze folder zetten als het flows.json bestand.
