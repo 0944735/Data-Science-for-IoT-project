@@ -6,7 +6,9 @@ Het project is een alarm systeem voor de voordeur. Het maakt gebruik van een mag
 
 De IoT-pipeline van het project ziet er zo uit:
 
+<p align="center">
 ![bbbb](https://i.imgur.com/kC5iHOo.png)
+  </p>
 
 Het project bestaat uit twee sofware onderdelen:
 - Pi C-code
