@@ -42,4 +42,5 @@ Wanneer alles is geinstalleerd kan deze respository gecloned worden.
 Alle JSON bestanden in deze repository kunnen gedownload worden en daarna geimporteerd worden naar Node Red.
 
 **LET OP:**
+
 De TestFile.txt is cruciaal voor de werking van de log. Zonder dit tekst bestand kan er niet in de log geschreven of gelezen worden. Dus dit bestand in deze folder zetten als het flows.json bestand.
