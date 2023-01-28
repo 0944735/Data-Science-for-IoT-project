@@ -6,23 +6,23 @@
 #include <wiringPi.h>
 #include "MQTTClient.h"
 
-#define MAGNET_SENSOR 25
-#define DOOR_LED 24
-#define BODY_CHECK 22
-#define BUZZER 17
-#define CLIENTID "ALARM SYSTEM OMEGA"
-#define ADDRESS  "mqtt://broker.hivemq.com:1883"
-#define ALARM_TOPIC "project/alarm"
-#define DOOR_TOPIC "project/deur"
-#define NOT_TOPIC "project/melding"
-#define PERSON_TOPIC "project/persoon"
-#define CHECK_TOPIC "project/check"
-#define DOOR_OPEN "OPEN"
-#define DOOR_CLOSED "CLOSED"
-#define INTRUDER_ALERT "M"
+#define MAGNET_SENSOR 	25
+#define DOOR_LED 		24
+#define BODY_CHECK 		22
+#define BUZZER 			17
+#define CLIENTID 		"ALARM SYSTEM OMEGA"
+#define ADDRESS  		"mqtt://broker.hivemq.com:1883"
+#define ALARM_TOPIC 	"project/alarm"
+#define DOOR_TOPIC 		"project/deur"
+#define NOT_TOPIC 		"project/melding"
+#define PERSON_TOPIC 	"project/persoon"
+#define CHECK_TOPIC 	"project/check"
+#define DOOR_OPEN 		"OPEN"
+#define DOOR_CLOSED 	"CLOSED"
+#define INTRUDER_ALERT 	"M"
 #define PERSON_DETECTED "P"
-#define QOS                 2
-#define TIMEOUT             10000L
+#define QOS        		2
+#define TIMEOUT    		10000L
 
 //todo: buzzer code -> waiting for logic converter to arrive
 
