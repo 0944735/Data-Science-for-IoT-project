@@ -178,7 +178,7 @@ void GPIO_setup(global_t input){
 	pullUpDnControl(BODY_CHECK, PUD_UP); //same as above
 	
 	wiringPiISR(MAGNET_SENSOR, INT_EDGE_BOTH, magnetRead);
-	wiringPiISR(BODY_CHECK, INT_EDGE_FALLING, intruderCheck); 
+	wiringPiISR(BODY_CHECK, INT_EDGE_FALLING, intruderCheck); //interrupt initialization
 	
 	pinMode(DOOR_LED, OUTPUT); //LED to indicate if the door is open for testing
 	digitalWrite(DOOR_LED, 0);
