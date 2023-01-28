@@ -176,8 +176,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 670,
-        "y": 100,
+        "x": 1030,
+        "y": 140,
         "wires": [
             [
                 "a5ee51ece38b2449",
@@ -198,8 +198,8 @@
         "format": "{{msg.payload}}",
         "layout": "row-center",
         "className": "",
-        "x": 930,
-        "y": 60,
+        "x": 1290,
+        "y": 100,
         "wires": []
     },
     {
@@ -216,8 +216,8 @@
         "correl": "",
         "expiry": "",
         "broker": "c66b4559e4f0cae2",
-        "x": 1030,
-        "y": 260,
+        "x": 1390,
+        "y": 300,
         "wires": []
     },
     {
@@ -240,8 +240,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 660,
-        "y": 180,
+        "x": 1020,
+        "y": 220,
         "wires": [
             [
                 "669652e6bcc9d309",
@@ -269,8 +269,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 660,
-        "y": 240,
+        "x": 1020,
+        "y": 280,
         "wires": [
             [
                 "669652e6bcc9d309",
@@ -299,8 +299,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 580,
-        "y": 500,
+        "x": 600,
+        "y": 660,
         "wires": [
             [
                 "9fce905c48cd6a8c"
@@ -319,8 +319,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1270,
-        "y": 540,
+        "x": 1290,
+        "y": 700,
         "wires": []
     },
     {
@@ -335,8 +335,8 @@
         "winHide": false,
         "oldrc": false,
         "name": "",
-        "x": 970,
-        "y": 560,
+        "x": 990,
+        "y": 720,
         "wires": [
             [
                 "0cf216f5d771ead5",
@@ -357,8 +357,8 @@
         "createDir": false,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 1310,
-        "y": 440,
+        "x": 1330,
+        "y": 600,
         "wires": [
             []
         ]
@@ -375,8 +375,8 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 750,
-        "y": 500,
+        "x": 770,
+        "y": 660,
         "wires": [
             [
                 "a7a0051b8e4ee87e",
@@ -396,8 +396,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 970,
-        "y": 620,
+        "x": 990,
+        "y": 780,
         "wires": []
     },
     {
@@ -415,8 +415,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1260,
-        "y": 500,
+        "x": 1280,
+        "y": 660,
         "wires": [
             []
         ]
@@ -432,8 +432,8 @@
         "createDir": false,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 1310,
-        "y": 380,
+        "x": 1330,
+        "y": 540,
         "wires": [
             []
         ]
@@ -449,8 +449,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1070,
-        "y": 440,
+        "x": 1090,
+        "y": 600,
         "wires": [
             [
                 "f5b822a3ac3128b0",
@@ -479,8 +479,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 860,
-        "y": 420,
+        "x": 880,
+        "y": 580,
         "wires": [
             [
                 "9eda2b955b1262a0"
@@ -499,8 +499,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1310,
-        "y": 280,
+        "x": 1330,
+        "y": 440,
         "wires": []
     },
     {
@@ -520,8 +520,8 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 560,
-        "y": 560,
+        "x": 580,
+        "y": 720,
         "wires": [
             [
                 "9fce905c48cd6a8c"
@@ -547,8 +547,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 360,
-        "y": 520,
+        "x": 380,
+        "y": 680,
         "wires": [
             [
                 "6cbc41c9204b7347"
@@ -575,8 +575,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 920,
-        "y": 320,
+        "x": 940,
+        "y": 480,
         "wires": [
             [
                 "6cbc41c9204b7347",
@@ -595,8 +595,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1100,
-        "y": 360,
+        "x": 1120,
+        "y": 520,
         "wires": [
             [
                 "900ce775473f5858"
@@ -613,8 +613,8 @@
         "tls": true,
         "name": "ralfprive@live.nl",
         "dname": "",
-        "x": 700,
-        "y": 320,
+        "x": 660,
+        "y": 380,
         "wires": []
     },
     {
@@ -629,8 +629,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 870,
-        "y": 140,
+        "x": 1230,
+        "y": 180,
         "wires": []
     },
     {
@@ -647,7 +647,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 240,
-        "y": 300,
+        "y": 380,
         "wires": [
             [
                 "bbc95436aea7e261"
@@ -667,8 +667,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 520,
-        "y": 420,
+        "x": 540,
+        "y": 580,
         "wires": [
             [
                 "2f49538e761bd82c",
@@ -705,7 +705,7 @@
         "to": "",
         "reg": false,
         "x": 440,
-        "y": 300,
+        "y": 380,
         "wires": [
             [
                 "b3a6147b602226c2"
@@ -742,8 +742,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1000,
-        "y": 200,
+        "x": 1360,
+        "y": 240,
         "wires": [
             [
                 "50643ab6a2d46994"
@@ -763,8 +763,8 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "className": "",
-        "x": 1180,
-        "y": 180,
+        "x": 1540,
+        "y": 220,
         "wires": []
     },
     {
@@ -774,8 +774,8 @@
         "name": "download",
         "filename": "AlarmSystemLog",
         "encoding": "none",
-        "x": 980,
-        "y": 720,
+        "x": 1140,
+        "y": 880,
         "wires": []
     },
     {
@@ -790,8 +790,8 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 770,
-        "y": 680,
+        "x": 950,
+        "y": 880,
         "wires": [
             [
                 "3551c8d1d1efc9f7"
@@ -818,8 +818,8 @@
         "payloadType": "date",
         "topic": "topic",
         "topicType": "msg",
-        "x": 560,
-        "y": 680,
+        "x": 740,
+        "y": 880,
         "wires": [
             [
                 "3fb85030af1ac48b"
@@ -847,13 +847,53 @@
         "topic": "",
         "payload": "P",
         "payloadType": "str",
-        "x": 410,
-        "y": 360,
+        "x": 430,
+        "y": 520,
         "wires": [
             [
                 "2f49538e761bd82c",
                 "8373d298188a3e2a"
             ]
         ]
+    },
+    {
+        "id": "3be7251616f4cf08",
+        "type": "comment",
+        "z": "cea09860469968f1",
+        "name": "Download button",
+        "info": "",
+        "x": 740,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "0e7f669a4e7ea53d",
+        "type": "comment",
+        "z": "cea09860469968f1",
+        "name": "Person detected + Log updating",
+        "info": "",
+        "x": 490,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "911f57cd6353535a",
+        "type": "comment",
+        "z": "cea09860469968f1",
+        "name": "Email melding",
+        "info": "",
+        "x": 250,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "cf0d9dbbb13c73c8",
+        "type": "comment",
+        "z": "cea09860469968f1",
+        "name": "dashboard main functionality",
+        "info": "",
+        "x": 1020,
+        "y": 100,
+        "wires": []
     }
 ]
