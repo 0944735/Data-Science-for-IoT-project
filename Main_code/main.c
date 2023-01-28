@@ -89,6 +89,7 @@ void intruderCheck(){
 		strcpy(variables.topic, PERSON_TOPIC);
 		MQTTPublish(variables); //check if alarm is turned on
 		if ((variables.alarmSystem == true) && (variables.intruderEntered == false)){ //Check if alarm system is turned on, intruderEntered is for email spam protection
+//			softPwmCreate(BUZZER, 50, 100);
 			variables.intruderEntered = true;
 			variables.pubmsg.payload = INTRUDER_ALERT;
 			variables.pubmsg.payloadlen = strlen(INTRUDER_ALERT);
@@ -178,6 +179,9 @@ void GPIO_setup(global_t input){
 	
 	pinMode(DOOR_LED, OUTPUT); //LED to indicate if the door is open for testing
 	digitalWrite(DOOR_LED, 0);
+	
+	pwmSetClock(0.005);
+//	softPwmCreate(BUZZER, 0, 100);
 }
 
 int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message) // this code is based off the paho mqtt subscribe example: https://www.eclipse.org/paho/files/mqttdoc/MQTTClient/html/subasync.html
@@ -192,6 +196,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
         variables.alarmSystem = true;
     }
     if (payloadptr[0] == 'S'){
+//		softPwmCreate(BUZZER, 0, 100);
         variables.alarmSystem = false;
         variables.intruderEntered = false; //essentially resetting functionality when the alarm is turned off
     }
