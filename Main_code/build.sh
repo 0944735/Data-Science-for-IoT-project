@@ -1,1 +1,1 @@
-gcc -o main.o main.c -lpaho-mqtt3c -lwiringPi
+gcc -o main.o main.c -lpaho-mqtt3c -lwiringPi -lpthread

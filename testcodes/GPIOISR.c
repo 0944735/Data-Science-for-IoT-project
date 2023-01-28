@@ -5,14 +5,15 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 
-#define MAGNET_SENSOR 25
+#define MAGNET_SENSOR 17
 #define DOOR_LED 24
-#define BUZZER 17
+#define BUZZER 22
 
 volatile bool doorOpen;
 
 void magnetRead(){
 	if(digitalRead(MAGNET_SENSOR)){
+		printf("BZZR ON");
 		doorOpen = true;
 	}
 	else if(!digitalRead(MAGNET_SENSOR)){
@@ -26,12 +27,12 @@ int main(int argc, char* argv[]){
 	digitalWrite(MAGNET_SENSOR, 1);
 	pullUpDnControl(MAGNET_SENSOR, PUD_UP);
 	
-	wiringPiISR(MAGNET_SENSOR, INT_EDGE_BOTH, magnetRead);
+	wiringPiISR(17, INT_EDGE_FALLING, magnetRead);
 	
 	pinMode(DOOR_LED, OUTPUT);
 	digitalWrite(DOOR_LED, 0);
 	
-	pwmSetClock(0.005);
+	pwmSetClock(0.02);
 	softPwmCreate(BUZZER, 0, 100);
 
 	magnetRead();
@@ -39,11 +40,11 @@ int main(int argc, char* argv[]){
 	while(1){
 		if (doorOpen == true){
 			digitalWrite(DOOR_LED, 1);
-			softPwmCreate(BUZZER, 80, 100);
+			softPwmWrite(BUZZER, 50);
 		}
 		else if (doorOpen == false){
 			digitalWrite(DOOR_LED, 0);
-			softPwmCreate(BUZZER, 0, 100);
+			softPwmWrite(BUZZER, 0);
 		}
 	}
 	
