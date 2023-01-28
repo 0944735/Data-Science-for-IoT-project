@@ -6,21 +6,21 @@
 #include <wiringPi.h>
 #include "MQTTClient.h"
 
-#define MAGNET_SENSOR 	25
+#define MAGNET_SENSOR 		25
 #define DOOR_LED 		24
 #define BODY_CHECK 		22
 #define BUZZER 			17
 #define CLIENTID 		"ALARM SYSTEM OMEGA"
 #define ADDRESS  		"mqtt://broker.hivemq.com:1883"
-#define ALARM_TOPIC 	"project/alarm"
+#define ALARM_TOPIC 		"project/alarm"
 #define DOOR_TOPIC 		"project/deur"
 #define NOT_TOPIC 		"project/melding"
-#define PERSON_TOPIC 	"project/persoon"
-#define CHECK_TOPIC 	"project/check"
+#define PERSON_TOPIC 		"project/persoon"
+#define CHECK_TOPIC 		"project/check"
 #define DOOR_OPEN 		"OPEN"
-#define DOOR_CLOSED 	"CLOSED"
-#define INTRUDER_ALERT 	"M"
-#define PERSON_DETECTED "P"
+#define DOOR_CLOSED 		"CLOSED"
+#define INTRUDER_ALERT 		"M"
+#define PERSON_DETECTED 	"P"
 #define QOS        		2
 #define TIMEOUT    		10000L
 
@@ -52,8 +52,8 @@ void delivered(void *context, MQTTClient_deliveryToken dt)
 
 void connlost(void *context, char *cause)
 {
-    printf("\nConnection lost\n");
-    printf("     cause: %s\n", cause);
+	printf("\nConnection lost\n");
+    	printf("     cause: %s\n", cause);
 }
 
 void magnetRead(){
@@ -112,31 +112,31 @@ int main(int argc, char* argv[]){
 	
 	MQTTClient_create(&variables.client, ADDRESS, CLIENTID,
 						MQTTCLIENT_PERSISTENCE_NONE, NULL); //create MQTT client
-    conn_opts.keepAliveInterval = 20;
-    conn_opts.cleansession = 1;
+    	conn_opts.keepAliveInterval = 20;
+    	conn_opts.cleansession = 1;
     
-    MQTTClient_setCallbacks(variables.client, NULL, connlost, msgarrvd, delivered);
+    	MQTTClient_setCallbacks(variables.client, NULL, connlost, msgarrvd, delivered);
     
-    if ((rc = MQTTClient_connect(variables.client, &conn_opts)) != MQTTCLIENT_SUCCESS)
-    {
-        printf("Failed to connect, return code %d\n", rc);
-        exit(EXIT_FAILURE);
-    } //connect to the broker
+    	if ((rc = MQTTClient_connect(variables.client, &conn_opts)) != MQTTCLIENT_SUCCESS)
+    	{
+        	printf("Failed to connect, return code %d\n", rc);
+        	exit(EXIT_FAILURE);
+    	} //connect to the broker
     
-    printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
+    	printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
            "Press Q<Enter> to quit\n\n", variables.topic, CLIENTID, QOS);
-    MQTTClient_subscribe(variables.client, ALARM_TOPIC, QOS);       
-    magnetRead(); //initial read of the door sensors
+   	 MQTTClient_subscribe(variables.client, ALARM_TOPIC, QOS);       
+    	magnetRead(); //initial read of the door sensors
     
-    int ch;
+    	int ch;
     
-    do{
+   	 do{
 		ch = getchar();
-    }while(ch!='Q' && ch != 'q');
+    	}while(ch!='Q' && ch != 'q');
 	
 	printf("Shutting down....\n");
-    MQTTClient_disconnect(variables.client, 10000); //MQTT disconnect when the user wants to
-    MQTTClient_destroy(&variables.client);
+    	MQTTClient_disconnect(variables.client, 10000); //MQTT disconnect when the user wants to
+    	MQTTClient_destroy(&variables.client);
 	
 	return 0;
 }
@@ -144,11 +144,11 @@ int main(int argc, char* argv[]){
 void MQTTPublish(global_t input){ //publish function to the topic specified 
 	int ret;
 	MQTTClient_publishMessage(variables.client, variables.topic, &variables.pubmsg, &variables.token);
-    printf("Waiting for up to %d seconds for publication of %s\n"
+    	printf("Waiting for up to %d seconds for publication of %s\n"
             "on topic %s for client with ClientID: %s\n",
             (int)(TIMEOUT/1000), variables.pubmsg.payload, variables.topic, CLIENTID);
-    ret = MQTTClient_waitForCompletion(variables.client, variables.token, TIMEOUT);
-    printf("Message with delivery token %d delivered\n", variables.token);
+   	ret = MQTTClient_waitForCompletion(variables.client, variables.token, TIMEOUT);
+    	printf("Message with delivery token %d delivered\n", variables.token);
    
 }
 
@@ -186,34 +186,34 @@ void GPIO_setup(global_t input){
 
 int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message) // this code is based off the paho mqtt subscribe example: https://www.eclipse.org/paho/files/mqttdoc/MQTTClient/html/subasync.html
 {
-    int i;
-    char* payloadptr;
-    printf("Message arrived\n");
-    printf("     topic: %s\n", topicName);
-    printf("   message: ");
-    payloadptr = message->payload;
-    if (payloadptr[0] == 'A'){
-        variables.alarmSystem = true;
-    }
-    if (payloadptr[0] == 'S'){
+    	int i;
+    	char* payloadptr;
+    	printf("Message arrived\n");
+    	printf("     topic: %s\n", topicName);
+    	printf("   message: ");
+   	payloadptr = message->payload;
+    	if (payloadptr[0] == 'A'){
+        	variables.alarmSystem = true;
+    	}
+    	if (payloadptr[0] == 'S'){
 //		softPwmCreate(BUZZER, 0, 100);
-        variables.alarmSystem = false;
-        variables.intruderEntered = false; //essentially resetting functionality when the alarm is turned off
-    }
-    for(i=0; i<message->payloadlen; i++)
-    {
-        putchar(*payloadptr++);
-    }
+        	variables.alarmSystem = false;
+        	variables.intruderEntered = false; //essentially resetting functionality when the alarm is turned off
+    	}
+    	for(i=0; i<message->payloadlen; i++)
+    	{
+        	putchar(*payloadptr++);
+    	}
 
-    putchar('\n');
-    if (variables.alarmSystem == true){
-        printf("ALARM ON\n");
-    }
-    else{
-        printf("ALARM OFF\n");
-    }
-    MQTTClient_freeMessage(&message);
-    MQTTClient_free(topicName); //clear memory
+    	putchar('\n');
+    	if (variables.alarmSystem == true){
+        	printf("ALARM ON\n");
+    	}
+    	else{
+        	printf("ALARM OFF\n");
+    	}
+    	MQTTClient_freeMessage(&message);
+    	MQTTClient_free(topicName); //clear memory
 
-    return 1;
+    	return 1;
 }
