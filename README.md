@@ -15,9 +15,9 @@ Het project bestaat uit twee sofware onderdelen:
 - Pi C-code
 - Node Red dashboard
 
-Naast dit heeft het project ook een hardware onderdeel die uitgelicht wordt in het projectdocumentatie (Project Alarm System OMEGA.pdf in de Documentation folder).
+Naast dit heeft het project ook een hardware onderdeel die uitgelicht wordt in het projectdocumentatie (Project Alarm System OMEGA.pdf in de Documentation folder) in dezelfde folder als de documentatie staat is er ook demo video beschikbaar.
 
-Voor beide codes is er setup nodig om het programma te runnen op een Raspberry Pi 4
+Voor beide codes is er setup nodig om het programma te runnen op een Raspberry Pi 4.
 
 ## Pi c-code
 
