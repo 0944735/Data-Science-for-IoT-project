@@ -37,6 +37,12 @@ Daarna kan de main.o bestand gerunt en dan runt het systeem. In de CLI kan bijge
 ```bash
 main.o
 ```
+Als dit niet werkt kan het volgende in een CLI gekopieerd worden:
+
+```bash
+gcc -o main main.c -lpaho-mqtt3c -lwiringPi -lpthread
+```
+Dan wordt er een executable gemaakt die gerunt kan worden.
 
 ## Node Red
 
